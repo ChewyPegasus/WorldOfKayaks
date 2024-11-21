@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: kayak
+      MYSQL_DATABASE: kayak
+      MYSQL_USER: kayak
+      MYSQL_PASSWORD: kayak
+    ports:
+      - "3306:3306"

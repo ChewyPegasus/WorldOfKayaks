@@ -28,6 +28,12 @@ dependencies {
 	implementation ("org.springframework.boot:spring-boot-starter-actuator")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	runtimeOnly("mysql:mysql-connector-java:8.0.30")
+	testImplementation("org.testcontainers:junit-jupiter")
+	testImplementation("org.testcontainers:mysql")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.withType<Test> {
