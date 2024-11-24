@@ -1,10 +1,8 @@
 package by.shplau.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -16,7 +14,24 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Product extends AbstractEntity {
+@NoArgsConstructor
+public class Product {
+    public Product(String name, String description, double price, Category category, String imageURL) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.imageURL = imageURL;
+    }
+
+    public Product(Product other) {
+        this.name = other.getName();
+        this.description = other.getDescription();
+        this.price = other.getPrice();
+        this.category = other.getCategory();
+        this.imageURL = other.getImageURL();
+    }
+
     public enum Category {
         PRODUCT,
         SERVICE,
@@ -29,7 +44,10 @@ public class Product extends AbstractEntity {
 
     private String name;
     private String description;
-    private int price;
+    private double price;
+
+    @Enumerated(EnumType.STRING)
     private Category category;
+
     private String imageURL;
 }
