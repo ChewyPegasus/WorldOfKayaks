@@ -30,7 +30,6 @@ public class User {
     private String password;
 
     public User(String username, String email, String password) {
-        super();
         this.setUsername(username);
         this.setEmail(email);
         this.setPassword(password);
