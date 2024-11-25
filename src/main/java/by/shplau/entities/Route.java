@@ -1,7 +1,6 @@
 package by.shplau.entities;
 
 import by.shplau.entities.util.Point;
-import by.shplau.entities.util.Time;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +22,19 @@ public class Route {
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
     private List<Point> points;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "time_id")
-    private Time duration;
+    //in minutes
+    private int duration;
 
-    private int difficulty;
+    private int difficulty = 0;
     private double price;
     private String imageUrl;
+
+    public Route(Route other) {
+        this.difficulty = other.getDifficulty();
+        this.price = other.getPrice();
+        this.duration = other.getDuration();
+        this.imageUrl = other.getImageUrl();
+        this.points = other.getPoints();
+        this.riverName = other.getRiverName();
+    }
 }

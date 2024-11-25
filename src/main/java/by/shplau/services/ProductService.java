@@ -27,8 +27,4 @@ public class ProductService {
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
-
-    public Product createProduct(String name, String description, double price, Product.Category category, String imageURL) {
-        return new Product(name, description, price, category, imageURL);
-    }
 }
