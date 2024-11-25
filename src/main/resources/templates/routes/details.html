@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${route.name}">Route Detail</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+</head>
+<body>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <h2 th:text="${route.name}"></h2>
+            <div class="route-details mt-3">
+                <p th:text="${route.description}"></p>
+                <div class="route-info">
+                        <span class="badge bg-primary"
+                              th:text="${route.difficulty}"></span>
+                    <span class="badge bg-info"
+                          th:text="${route.durationHours + ' часов'}"></span>
+                    <span class="badge bg-success"
+                          th:text="${route.distanceKm + ' км'}"></span>
+                </div>
+            </div>
+
+            <div id="route-map" style="height: 400px;" class="mt-3"></div>
+
+            <div class="included-services mt-4">
+                <h4>Включено в стоимость:</h4>
+                <ul>
+                    <li th:each="service : ${route.includedServices}"
+                        th:text="${service}"></li>
+                </ul>
+            </div>
+
+            <div class="requirements mt-4">
+                <h4>Что необходимо взять с собой:</h4>
+                <ul>
+                    <li th:each="req : ${route.requirements}"
+                        th:text="${req}"></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="booking-card">
+                <h3>Забронировать маршрут</h3>
+                <p class="price" th:text="${route.price + ' BYN'}"></p>
+                <form th:action="@{/cart/add-route}" method="post">
+                    <input type="hidden" name="routeId" th:value="${route.id}">
+                    <div class="form-group">
+                        <label>Дата похода</label>
+                        <input type="date" class="form-control" name="date" required>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label>Количество участников</label>
+                        <input type="number" class="form-control" name="participants"
+                               min="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3 w-100">
+                        Добавить в корзину
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script th:inline="javascript">
+    const waypoints = /*[[${route.waypoints}]]*/ [];
+
+    const map = L.map('route-map');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    const markers = waypoints.map(point =>
+        L.marker([point.latitude, point.longitude])
+         .bindPopup(point.name)
+         .addTo(map)
+    );
+
+    const bounds = L.latLngBounds(markers.map(m => m.getLatLng()));
+    map.fitBounds(bounds);
+
+    // Соединяем точки линией
+    const routeLine = L.polyline(
+        waypoints.map(p => [p.latitude, p.longitude]),
+        {color: 'blue'}
+    ).addTo(map);
+</script>
+</body>
+</html>

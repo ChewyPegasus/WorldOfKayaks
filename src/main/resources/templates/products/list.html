@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Products</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div th:each="product : ${products}" class="col-md-4 mb-4">
+            <div class="card">
+                <img th:src="${product.imageUrl}" class="card-img-top">
+                <div class="card-body">
+                    <h5 th:text="${product.name}" class="card-title"></h5>
+                    <p th:text="${product.description}" class="card-text"></p>
+                    <p th:text="${'Price: $' + product.price}" class="card-text"></p>
+                    <button class="btn btn-primary add-to-cart"
+                            th:data-product-id="${product.id}">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/cart.js"></script>
+</body>
+</html>

@@ -2,6 +2,7 @@ package by.shplau.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -14,7 +15,8 @@ import lombok.Setter;
 @Table(name = "users")
 @Getter
 @Setter
-public class User extends AbstractEntity {
+@NoArgsConstructor
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +30,8 @@ public class User extends AbstractEntity {
     private String password;
 
     public User(String username, String email, String password) {
-        super();
         this.setUsername(username);
         this.setEmail(email);
         this.setPassword(password);
-    }
-
-    public User() {
-        this.setUsername("John Doe");
-        this.setEmail("no email");
-        this.setPassword("zachem...");
     }
 }
