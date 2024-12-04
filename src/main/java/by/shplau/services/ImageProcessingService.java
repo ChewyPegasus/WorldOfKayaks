@@ -31,19 +31,11 @@ public class ImageProcessingService {
     @Value("${file.jpeg-quality}")
     private float jpegQuality;
 
-    public BufferedImage processImage(MultipartFile file) throws IOException {
-        BufferedImage original = ImageIO.read(file.getInputStream());
-
-        // Оптимизация размера
-        BufferedImage resized = resizeImage(original);
-
-        // Создание миниатюры
-        BufferedImage thumbnail = createThumbnail(original);
-
-        return resized;
+    public BufferedImage processImage(BufferedImage original) throws IOException {
+        return resizeImage(original);
     }
 
-    public byte[] processImageToBytes(MultipartFile file) throws IOException {
+    public byte[] processImageToBytes(BufferedImage file) throws IOException {
         BufferedImage processed = processImage(file);
         return imageToBytes(processed);
     }

@@ -30,7 +30,7 @@ public class ProductService {
     }
 
     public Product createProduct(Product product, MultipartFile image) {
-        ImageUploadResult imageResult = fileService.storeFile(image);
+        ImageUploadResult imageResult = fileService.storeProductImage(image);
         product.setImageURL("files/download/" + imageResult.getImageFileName());
         product.setThumbnailURL("files/download/thumbnails/" + imageResult.getThumbnailFileName());
         return productRepository.save(product);
@@ -47,7 +47,7 @@ public class ProductService {
                             .lastIndexOf("/") + 1);
             fileService.deleteFile(oldFileName);
 
-            ImageUploadResult imageResult = fileService.storeFile(image);
+            ImageUploadResult imageResult = fileService.storeProductImage(image);
             product.setImageURL("files/download/" + imageResult.getImageFileName());
             product.setThumbnailURL("files/download/thumbnails/" + imageResult.getThumbnailFileName());
             return productRepository.save(product);

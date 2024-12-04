@@ -23,7 +23,7 @@ public class FileController {
     @Autowired
     private FileStorageService fileService;
 
-    @GetMapping("/download/{filename:.+}")
+    @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = fileService.loadFileAsResource(fileName);
         String contentType = null;
