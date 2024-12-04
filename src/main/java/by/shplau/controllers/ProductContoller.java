@@ -3,10 +3,13 @@ package by.shplau.controllers;
 import by.shplau.entities.Product;
 import by.shplau.entities.User;
 import by.shplau.services.ProductService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,8 +34,13 @@ public class ProductContoller {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        Product createdProduct = productService.createProduct(product);
-        return ResponseEntity.ok(createdProduct);
+    public ResponseEntity<Product> createProduct(@RequestParam("file") MultipartFile file, @RequestParam("product") String productJson) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Product product = mapper.readValue(productJson, Product.class);
+            return ResponseEntity.ok(productService.createProduct(product, file));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Invalid product data", e);
+        }
     }
 }

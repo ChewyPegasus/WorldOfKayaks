@@ -30,6 +30,7 @@ public class Product {
         this.price = other.getPrice();
         this.category = other.getCategory();
         this.imageURL = other.getImageURL();
+        this.thumbnailURL = other.getThumbnailURL();
     }
 
     public enum Category {
@@ -50,4 +51,5 @@ public class Product {
     private Category category;
 
     private String imageURL;
+    private String thumbnailURL;
 }
