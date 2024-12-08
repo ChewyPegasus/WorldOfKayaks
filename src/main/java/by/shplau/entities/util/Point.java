@@ -1,6 +1,7 @@
 package by.shplau.entities.util;
 
 import by.shplau.entities.Route;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Point {
-    private enum Type {
+    public enum Type {
         START,
         END,
         REST,
@@ -30,5 +31,13 @@ public class Point {
 
     @ManyToOne
     @JoinColumn(name = "route_id")
+    @JsonBackReference
     private Route route;
+
+    public Point (double latitude, double longtitude, Type type, Route route) {
+        this.latitude = latitude;
+        this.longtitude = longtitude;
+        this.type = type;
+        this.route = route;
+    }
 }
