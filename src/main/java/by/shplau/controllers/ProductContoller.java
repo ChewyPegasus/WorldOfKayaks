@@ -1,13 +1,12 @@
 package by.shplau.controllers;
 
 import by.shplau.entities.Product;
-import by.shplau.entities.User;
 import by.shplau.services.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,20 +17,42 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class ProductContoller {
 
+    @Value("${app.baseUrl:http://localhost:8080}")
+    private String baseUrl;
+
     @Autowired
     private ProductService productService;
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
+        products.forEach(product -> {
+            if (product.getImageURL() != null) {
+                // Убираем жесткий путь
+                product.setImageURL("/img/samples/products/" + product.getImageURL());
+            }
+            if (product.getThumbnailURL() != null) {
+                product.setThumbnailURL("/img/samples/products/" + product.getThumbnailURL());
+            }
+        });
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> showProduct(@PathVariable Long id) {
-        Optional<Product> product = productService.getProductById(id);
-        return product.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
-    }
+        Optional<Product> productOpt = productService.getProductById(id);
+        if (productOpt.isPresent()) {
+            Product product = productOpt.get();
+            if (product.getImageURL() != null) {
+                product.setImageURL("/img/samples/products/" + product.getImageURL());
+            }
+            if (product.getThumbnailURL() != null) {
+                product.setThumbnailURL("/img/samples/products/" + product.getThumbnailURL());
+            }
+            return ResponseEntity.ok(product);
+        }
+        return ResponseEntity.notFound().build();
+    }   
 
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestParam("file") MultipartFile file, @RequestParam("product") String productJson) {

@@ -35,27 +35,27 @@ public class ShplauApplication {
 					"Легкий каяк для начинающих",
 					599.99,
 					Product.Category.PRODUCT,
-					"files/download/kayak1.jpg"
+					"kayak1.jpg"
 			);
-			product1.setThumbnailURL("files/download/thumbnails/thumb_kayak1.jpg");
+			product1.setThumbnailURL("thumbnails/thumb_kayak1.jpg");
 
 			Product product2 = new Product(
 					"Инструктаж по технике безопасности",
 					"Базовый курс безопасности на воде",
 					49.99,
 					Product.Category.SERVICE,
-					"files/download/safety_course.jpg"
+					"safety_course.jpg"
 			);
-			product2.setThumbnailURL("files/download/thumbnails/thumb_safety_course.jpg");
+			product2.setThumbnailURL("thumbnails/thumb_safety_course.jpg");
 
 			Product product3 = new Product(
 					"Спасательный жилет",
 					"Профессиональный спасательный жилет",
 					89.99,
 					Product.Category.PRODUCT,
-					"files/download/vest.jpg"
+					"vest.jpg"
 			);
-			product3.setThumbnailURL("files/download/thumbnails/thumb_vest.jpg");
+			product3.setThumbnailURL("thumbnails/thumb_vest.jpg");
 
 			productRepository.save(product1);
 			productRepository.save(product2);
@@ -71,21 +71,21 @@ public class ShplauApplication {
 			route1.setDuration(120); // 2 часа
 			route1.setDifficulty(2);
 			route1.setPrice(79.99);
-			route1.setImageUrl("files/download/dnepr_route.jpg");
+			route1.setImageUrl("dnepr_route.jpg");
 
 			Route route2 = new Route();
 			route2.setRiverName("Припять");
 			route2.setDuration(180); // 3 часа
 			route2.setDifficulty(3);
 			route2.setPrice(99.99);
-			route2.setImageUrl("files/download/pripyat_route.jpg");
+			route2.setImageUrl("pripyat_route.jpg");
 
 			Route route3 = new Route();
 			route3.setRiverName("Березина");
 			route3.setDuration(90); // 1.5 часа
 			route3.setDifficulty(1);
 			route3.setPrice(59.99);
-			route3.setImageUrl("files/download/berezina_route.jpg");
+			route3.setImageUrl("berezina_route.jpg");
 
 			// Сохраняем маршруты сначала, чтобы получить id
 			routeRepository.save(route1);
