@@ -5,7 +5,6 @@ import by.shplau.services.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +24,6 @@ public class ProductContoller {
         List<Product> products = productService.getAllProducts();
         products.forEach(product -> {
             if (product.getImageURL() != null) {
-                // Убираем жесткий путь
                 product.setImageURL("/img/samples/products/" + product.getImageURL());
             }
             if (product.getThumbnailURL() != null) {
@@ -36,7 +34,7 @@ public class ProductContoller {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> showProduct(@PathVariable Long id) {
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Optional<Product> productOpt = productService.getProductById(id);
         if (productOpt.isPresent()) {
             Product product = productOpt.get();

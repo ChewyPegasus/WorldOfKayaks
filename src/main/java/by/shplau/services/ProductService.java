@@ -26,9 +26,6 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private FileStorageService fileService;
-
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
@@ -52,7 +49,7 @@ public class ProductService {
             }
         } else if (product.getImageURL() == null || product.getImageURL().isEmpty()) {
             // Set a default product image if no image is provided
-            product.setImageURL("default_product.jpg");
+            product.setImageURL("product.jpg");
         }
         return productRepository.save(product);
     }

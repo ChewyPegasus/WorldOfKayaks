@@ -32,6 +32,7 @@ public class Route {
     private int difficulty = 0;
     private double price;
     private String imageUrl;
+    private String thumbnailUrl;
 
     public Route(Route other) {
         this.difficulty = other.getDifficulty();
@@ -41,5 +42,6 @@ public class Route {
         this.points = other.getPoints();
         this.riverName = other.getRiverName();
         this.description = other.getDescription();
+        this.thumbnailUrl = other.getThumbnailUrl();
     }
 }
