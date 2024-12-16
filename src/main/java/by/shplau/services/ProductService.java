@@ -38,6 +38,7 @@ public class ProductService {
     }
 
     public Product createProduct(Product product, MultipartFile file) {
+        // Ensure a default image is set if no image is provided
         if (file != null && !file.isEmpty()) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             try {
@@ -45,10 +46,13 @@ public class ProductService {
                     Files.createDirectories(PRODUCTS_PATH);
                 }
                 Files.copy(file.getInputStream(), PRODUCTS_PATH.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-                product.setImageURL("img/samples/products/" + fileName);
+                product.setImageURL(fileName);
             } catch (IOException e) {
                 throw new RuntimeException("Could not store file " + fileName, e);
             }
+        } else if (product.getImageURL() == null || product.getImageURL().isEmpty()) {
+            // Set a default product image if no image is provided
+            product.setImageURL("default_product.jpg");
         }
         return productRepository.save(product);
     }

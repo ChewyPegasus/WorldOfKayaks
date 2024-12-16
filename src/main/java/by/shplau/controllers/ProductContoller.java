@@ -17,9 +17,6 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class ProductContoller {
 
-    @Value("${app.baseUrl:http://localhost:8080}")
-    private String baseUrl;
-
     @Autowired
     private ProductService productService;
 
@@ -29,10 +26,10 @@ public class ProductContoller {
         products.forEach(product -> {
             if (product.getImageURL() != null) {
                 // Убираем жесткий путь
-                product.setImageURL(baseUrl + "/img/samples/products/" + product.getImageURL());
+                product.setImageURL("/img/samples/products/" + product.getImageURL());
             }
             if (product.getThumbnailURL() != null) {
-                product.setThumbnailURL(baseUrl + "/img/samples/products/" + product.getThumbnailURL());
+                product.setThumbnailURL("/img/samples/products/" + product.getThumbnailURL());
             }
         });
         return ResponseEntity.ok(products);
@@ -44,10 +41,10 @@ public class ProductContoller {
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
             if (product.getImageURL() != null) {
-                product.setImageURL(baseUrl + "/img/samples/products/" + product.getImageURL());
+                product.setImageURL("/img/samples/products/" + product.getImageURL());
             }
             if (product.getThumbnailURL() != null) {
-                product.setThumbnailURL(baseUrl + "/img/samples/products/" + product.getThumbnailURL());
+                product.setThumbnailURL("/img/samples/products/" + product.getThumbnailURL());
             }
             return ResponseEntity.ok(product);
         }

@@ -32,6 +32,7 @@ public class RouteService {
     }
 
     public Route createRoute(Route route) {
+        // Ensure a default image is set if no image is provided
         if (route.getImageUrl() == null || route.getImageUrl().isEmpty()) {
             route.setImageUrl("/img/default/route.jpg");
         }

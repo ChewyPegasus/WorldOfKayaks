@@ -3,6 +3,7 @@ package by.shplau.controllers;
 import by.shplau.entities.Route;
 import by.shplau.services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,9 @@ public class RouteController {
 
     @Autowired
     private RouteService routeService;
+
+    @Value("${baseUrl:http://localhost:8080}")
+    private String baseUrl;
 
     @GetMapping
     public ResponseEntity<List<Route>> getRoutes(
@@ -36,10 +40,11 @@ public class RouteController {
                     .toList();
         }
 
-        // Add full image URL
+        // Add full image URL dynamically
         routes.forEach(route -> {
             if (route.getImageUrl() != null) {
-                route.setImageUrl("http://localhost:8080" + route.getImageUrl());
+                // Use baseUrl from application.properties or environment variable
+                route.setImageUrl(baseUrl + route.getImageUrl());
             }
         });
 
@@ -52,7 +57,7 @@ public class RouteController {
         return routeOpt.map(route -> {
             // Add full image URL
             if (route.getImageUrl() != null) {
-                route.setImageUrl("http://localhost:8080" + route.getImageUrl());
+                route.setImageUrl(baseUrl + route.getImageUrl());
             }
             return ResponseEntity.ok(route);
         }).orElseGet(() -> ResponseEntity.notFound().build());
