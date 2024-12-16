@@ -1,6 +1,7 @@
 package by.shplau.entities;
 
 import by.shplau.entities.util.Point;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Route {
     private String riverName;
 
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Point> points;
 
     //in minutes
