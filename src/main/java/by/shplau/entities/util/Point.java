@@ -24,19 +24,21 @@ public class Point {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double latitude, longtitude;
+    private double latitude, longitude;  // Исправлено название поля
 
     @Enumerated(EnumType.STRING)
     private Type type;
+
+    private String description;  // Добавлено описание точки
 
     @ManyToOne
     @JoinColumn(name = "route_id")
     @JsonBackReference
     private Route route;
 
-    public Point (double latitude, double longtitude, Type type, Route route) {
+    public Point (double latitude, double longitude, Type type, Route route) {
         this.latitude = latitude;
-        this.longtitude = longtitude;
+        this.longitude = longitude;
         this.type = type;
         this.route = route;
     }

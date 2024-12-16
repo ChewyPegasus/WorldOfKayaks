@@ -4,8 +4,8 @@ import by.shplau.entities.User;
 import by.shplau.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +15,19 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(401).body("Not authenticated");
+        }
+
+        String username = authentication.getName();
+        Optional<User> user = userService.findByUsername(username);
+        
+        return user.map(u -> ResponseEntity.ok(new UserProfileResponse(u)))
+                  .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
@@ -30,7 +43,21 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user.getUsername(), user.getEmail(), user.getPassword());
+        User createdUser = userService.createUser(user.getUsername(), user.getEmail(), user.getPassword(), user.getRole());
         return ResponseEntity.ok(createdUser);
     }
+}
+
+class UserProfileResponse {
+    private String username;
+    private String email;
+
+    public UserProfileResponse(User user) {
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+    }
+
+    // Геттеры
+    public String getUsername() { return username; }
+    public String getEmail() { return email; }
 }

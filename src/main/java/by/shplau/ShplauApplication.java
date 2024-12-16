@@ -4,6 +4,7 @@ import by.shplau.entities.Product;
 import by.shplau.entities.Route;
 import by.shplau.entities.User;
 import by.shplau.entities.util.Point;
+import by.shplau.entities.util.Role;
 import by.shplau.repositories.ProductRepository;
 import by.shplau.repositories.RouteRepository;
 import by.shplau.repositories.UserRepository;
@@ -126,9 +127,9 @@ public class ShplauApplication {
 	@Bean
 	public CommandLineRunner demoUsers(UserRepository userRepository) {
 		return (args) -> {
-			User user1 = new User("john_doe", "john@example.com", "password123");
-			User user2 = new User("jane_doe", "jane@example.com", "securepassword");
-			User user3 = new User("admin", "admin@example.com", "adminpassword");
+			User user1 = new User("john_doe", "john@example.com", "password123", Role.USER);
+			User user2 = new User("jane_doe", "jane@example.com", "securepassword", Role.USER);
+			User user3 = new User("admin", "admin@example.com", "adminpassword", Role.USER);
 
 			userRepository.save(user1);
 			userRepository.save(user2);

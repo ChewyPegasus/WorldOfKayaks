@@ -29,10 +29,10 @@ public class ProductContoller {
         products.forEach(product -> {
             if (product.getImageURL() != null) {
                 // Убираем жесткий путь
-                product.setImageURL("/img/samples/products/" + product.getImageURL());
+                product.setImageURL(baseUrl + "/img/samples/products/" + product.getImageURL());
             }
             if (product.getThumbnailURL() != null) {
-                product.setThumbnailURL("/img/samples/products/" + product.getThumbnailURL());
+                product.setThumbnailURL(baseUrl + "/img/samples/products/" + product.getThumbnailURL());
             }
         });
         return ResponseEntity.ok(products);
@@ -44,10 +44,10 @@ public class ProductContoller {
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
             if (product.getImageURL() != null) {
-                product.setImageURL("/img/samples/products/" + product.getImageURL());
+                product.setImageURL(baseUrl + "/img/samples/products/" + product.getImageURL());
             }
             if (product.getThumbnailURL() != null) {
-                product.setThumbnailURL("/img/samples/products/" + product.getThumbnailURL());
+                product.setThumbnailURL(baseUrl + "/img/samples/products/" + product.getThumbnailURL());
             }
             return ResponseEntity.ok(product);
         }

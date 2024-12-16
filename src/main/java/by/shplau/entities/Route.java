@@ -13,12 +13,14 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String riverName;
+    private String description;  // Добавлено описание маршрута
 
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -38,5 +40,6 @@ public class Route {
         this.imageUrl = other.getImageUrl();
         this.points = other.getPoints();
         this.riverName = other.getRiverName();
+        this.description = other.getDescription();
     }
 }
